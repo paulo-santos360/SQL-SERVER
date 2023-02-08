@@ -1,50 +1,97 @@
-create database despesas
-go 
 
-use despesas
+-----------------------------------------------------
+Faça os códigos para 
+BACKUP
+E 
+RESTORE
+
+Insira três funcionarios e três materiais
+
+Faça um select geral para as duas tabelas
+
+Teste o select abaixo:
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+
+Procure identificar o que o select acima faz...
+
+Coloque GO entre os comandos
+
+Faça a ligação com o Visual Studio
+
+
+create database Banquinho
 go
 
-create schema custos authorization dbo
-go
+use Banquinho
 
-create table custos.categoria
+create schema banco authorization dbo
+
+create table Banco.cadastro
 (
-cat_cd int identity(1,1) primary key,
-cat_nm varchar(45)
+  CAD_CD int primary key identity(1,1),
+  CAD_nome varchar(40)  NOT NULL,
+  CAD_fone varchar(20)  NOT NULL,
+  CAD_email varchar(40) NOT NULL,
+  CAD_end varchar(40) NOT NULL,
+  CAD_cep varchar(12) NOT NULL,
+  CAD_regiao varchar(40) NOT NULL,
+  CAD_país varchar(40) NOT NULL
 )
+
+insert into Banco.cadastro values('PAULO',23451234,'PAULO@GMAIL.COM','RUA RODOLFO',12345123,'NORTE','BRASIL')
+insert into Banco.cadastro values('ANA',23451234,'PAULO@GMAIL.COM','RUA RODOLFO',12345123,'NORTE','BRASIL')
+insert into Banco.cadastro values('JOAO',23451234,'PAULO@GMAIL.COM','RUA RODOLFO',12345123,'NORTE','BRASIL')
+
+select * from Banco.cadastro
+
+create database farm
 go
 
+use farm
 
-insert into custos.categoria values ('agua')
-insert into custos.categoria values ('automovel')
-insert into custos.categoria values ('transporte')
-insert into custos.categoria values ('luz')
-insert into custos.categoria values ('gas')
+create schema fazenda authorization dbo
 
-select * from custos.categoria
-
-drop table custos.despesas
-
-create table custos.despesas
+CREATE TABLE fazenda.funcionarios
 (
-des_cd int identity(1,1) primary key,
-des_nm varchar(45),
-des_valor decimal(10,2),
-des_dia datetime,
-cat_cd int foreign key references custos.categoria
+funcionarios_cd int primary key identity(1,1),
+funcionarios_Nm	varchar(40)  NOT NULL,
+funcionarios_End varchar(40)  NOT NULL,
+funcionarios_Fone varchar(20)  NOT NULL,
+funcionarios_email varchar(40)  NOT NULL,
 )
-go
 
+CREATE TABLE fazenda.materiais
+(
+materiais_cd int primary key identity(1,1),
+materiais_Nm varchar(40)  NOT NULL,
+materiais_Prof varchar(40)  NOT NULL,
+materiais_Dias_S varchar(40)  NOT NULL,
+)
 
-insert into custos.despesas values
-('supermercado',350.55,2023-03-02,4)
+BACKUP DATABASE [farm] TO  DISK = N'C:\SQL2019\DB\Backup\farm.bak' WITH NOFORMAT, NOINIT,  NAME = N'farm-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10
+GO
 
-select * from custos.despesas
+USE [master]
+RESTORE DATABASE [farm] FROM  DISK = N'C:\SQL2019\DB\Backup\farm.bak' WITH  FILE = 1,  NOUNLOAD,  STATS = 5
 
-select * from custos.despesas
-join
-custos.categoria
-on
-custos.despesas.cat_cd=categoria.cat_cd
+GO
 
-use lavanderia
+use farm
+
+insert into fazenda.funcionarios values('PAULO','RUA RODOLFO',12345678,'paulo@gmail.com')
+insert into fazenda.funcionarios values('JOAO','RUA RODOLFO',12345678,'paulo@gmail.com')
+insert into fazenda.funcionarios values('JOSE','RUA RODOLFO',12345678,'paulo@gmail.com')
+
+SELECT * FROM fazenda.funcionarios
+
+insert into fazenda.materiais values('MADEIRA','RODOLFO','sabado')
+insert into fazenda.materiais values('Ferro','RODOLFO','domingo')
+insert into fazenda.materiais values('Aço','RODOLFO','segunda')
+
+SELECT * FROM fazenda.materiais
+
+SELECT funcionarios_Nm FROM fazenda.funcionarios
+UNION
+SELECT materiais_Nm FROM fazenda.materiais
