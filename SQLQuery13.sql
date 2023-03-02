@@ -1,9 +1,13 @@
 create database Senac
+GO
 use Senac
+GO
 
 create schema Senac authorization dbo
+Go
 
-drop table Senac.Aluno
+--drop table Senac.Aluno
+
 
 create table Senac.Aluno
 (
@@ -13,9 +17,11 @@ Alu_SobreNome varchar(50),
 Alu_Nasc varchar(50),
 Alu_Cidade varchar(50)
 )
+Go
 
 
 select * from Senac.Aluno
+Go
 
 select * from AlunosView
 
