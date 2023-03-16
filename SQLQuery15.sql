@@ -31,3 +31,22 @@ where Department = 'Sales'
 create view SALARYINFO as
 select EmployeeID, FirstName, LastName, HireDate, Department, Salary From Employees
 where Salary > 60000
+
+create procedure GetAllEmployeersByDepartmentID 
+@department nvarchar(50)
+as
+begin
+select * from Employees
+where Department = @department
+end
+
+exec GetAllEmployeersByDepartmentID;
+
+CREATE PROCEDURE GetAllEmployeersByDepartmentID12
+as
+begin
+update produtos set salario = salario * 1.1 where categoria = 'eletrônicos' end
+
+exec produtos
+
+select * from produtos
